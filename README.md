@@ -60,9 +60,9 @@ This will do a search for `query` and return the results as an array of objects
 
 ```json
 [
-	{"name":"Jo","times":602},
-  {"name":"Johnna","times":996},
-  {"name":"Joby","times":987}
+    { "name": "Jo", "times": 602 },
+    { "name": "Johnna", "times": 996 },
+    { "name": "Joby", "times": 987 }
 ]
 ```
 
@@ -76,7 +76,7 @@ JSON Object with the name of the result on the `name` property.
 
 ```json
 {
-  "name": "annabelle"
+    "name": "annabelle"
 }
 ```
 
@@ -86,8 +86,8 @@ JSON Object with the entry updated
 
 ```json
 {
-  "name":"Annabelle",
-  "times":535
+    "name":"Annabelle",
+    "times":535
 }
 ```
 
