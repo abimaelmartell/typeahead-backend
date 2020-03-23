@@ -32,7 +32,7 @@ class DataStore
   end
 
   def increase_popularity_for(name)
-    i = @data.find_index { |entry| compare_str(entry[:name], name) }
+    i = @data.index { |entry| compare_str(entry[:name], name) }
 
     if i.nil?
       raise EntryNotFound
