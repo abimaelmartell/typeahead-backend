@@ -10,7 +10,7 @@ class DataStore
   end
 
   def load_json_file!
-    file = File.read("./data.json")
+    file = File.read("./names.json")
 
     json = JSON(file)
 
