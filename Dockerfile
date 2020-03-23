@@ -12,4 +12,4 @@ COPY . $APP_HOME
 
 EXPOSE $PORT
 
-CMD ["bundle", "exec", "ruby", "app.rb"]
+CMD bundle exec rackup --host 0.0.0.0 -p $PORT
