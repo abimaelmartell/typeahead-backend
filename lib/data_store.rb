@@ -1,40 +1,59 @@
 class DataStore
+  class EntryNotFound < StandardError; end
+
   attr_reader :data
 
   def initialize(initial_data = nil)
-    @data = initial_data
+    if initial_data
+      @data = parse_json_to_data(initial_data)
+    end
   end
 
   def load_json_file!
     file = File.read("./data.json")
 
-    @data = JSON(file, symbolize_names: true)
+    json = JSON(file)
+
+    @data = parse_json_to_data(json)
   end
 
-  def get_suggestions_for(query)
-    regex = /^#{query}/i
-    regex_match = /^#{query}$/i
-
-    suggestions = @data.select { |e| e[:name] =~ regex }
-
-    suggestions.sort do |a, b|
-      if a[:name].match?(regex_match)
-        -1
-      else
-        b[:times] <=> a[:times]
-      end
+  def get_suggestions_for(query, limit = 10)
+    if query.nil?
+      return @data
     end
+
+    regex = /^#{query}/i
+
+    @data
+      .select { |e| e[:name] =~ regex }
+      .sort { |a, b| b[:times] <=> a[:times] }
+      .tap do |r|
+          if i = r.index { |x| compare_str(x[:name], query) }
+            r.unshift(r.delete_at(i))
+          end
+        end
+      .first(limit)
   end
 
   def increase_popularity_for(name)
-    i = @data.find_index { |entry| entry[:name] == name }
+    i = @data.find_index { |entry| compare_str(entry[:name], name) }
 
     if i.nil?
-      return false
+      raise EntryNotFound
     end
 
     @data[i][:times] += 1
 
-    true
+    @data[i]
+  end
+
+private
+
+  def parse_json_to_data(json)
+    json.map { |k, v| { name: k, times: v } }
+  end
+
+  def compare_str(a, b)
+    a.downcase == b.downcase
   end
 end

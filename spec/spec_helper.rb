@@ -1,4 +1,7 @@
 require 'json'
+require 'rack/test'
+
+ENV['RACK_ENV'] = 'test'
 
 RSpec.configure do |config|
   config.expect_with :rspec do |expectations|
@@ -21,4 +24,6 @@ RSpec.configure do |config|
 
   config.order = :random
   Kernel.srand config.seed
+
+  config.include Rack::Test::Methods
 end

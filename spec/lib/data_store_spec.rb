@@ -4,20 +4,20 @@ require_relative '../../lib/data_store'
 
 describe DataStore do
   let (:data) {
-    [
-      { name: 'John', times: 20 },
-      { name: 'ana', times: 30 },
-      { name: 'anabelle', times: 50 },
-      { name: 'Johnson', times: 40 },
-      { name: 'Johnny', times: 10 },
-    ]
+    {
+      'John' => 20,
+      'Ana' => 30,
+      'Anabelle' => 50,
+      'Johnson' => 40,
+      'Johnny' => 10,
+    }
   }
 
   describe '#initialize' do
     it 'should be able to set data' do
       service = described_class.new data
 
-      expect(service.data).to eql(data)
+      expect(service.data.count).to eql(data.count)
     end
   end
 
