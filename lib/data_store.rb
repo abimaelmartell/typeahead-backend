@@ -18,15 +18,11 @@ class DataStore
   end
 
   def get_suggestions_for(query, limit)
-    if query.nil?
-      return @data.first(limit)
-    end
-
     regex = /^#{query}/i
 
     @data
       .select { |e| e[:name] =~ regex }
-      .sort { |a, b| b[:times] <=> a[:times] }
+      .sort { |a, b| [b[:times], a[:name]] <=> [a[:times], b[:name]] }
       .tap do |r|
           if i = r.index { |x| compare_str(x[:name], query) }
             r.unshift(r.delete_at(i))

@@ -16,8 +16,10 @@ class Typeahead < Sinatra::Base
   end
 
   get '/typeahead/?:query?' do
+    query = params[:query] || ""
+
     results = @store.get_suggestions_for(
-      params[:query],
+      query,
       settings.suggestions_limit
     )
 
