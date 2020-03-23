@@ -17,9 +17,9 @@ class DataStore
     @data = parse_json_to_data(json)
   end
 
-  def get_suggestions_for(query, limit = 10)
+  def get_suggestions_for(query, limit)
     if query.nil?
-      return @data
+      return @data.first(limit)
     end
 
     regex = /^#{query}/i

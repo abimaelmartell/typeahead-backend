@@ -43,16 +43,17 @@ describe DataStore do
 
   describe '#get_suggestions' do
     let(:service) { described_class.new data }
+    let(:limit) { 10 }
 
     it 'should return suggestions ordered by popularity' do
-      results = service.get_suggestions_for('jo')
+      results = service.get_suggestions_for('jo', limit)
 
       expect(results.count).to eql(3)
       expect(results.first[:name]).to eql('Johnson')
     end
 
     it 'should return exacth matches first' do
-      results = service.get_suggestions_for('john')
+      results = service.get_suggestions_for('john', limit)
 
       expect(results.count).to eql(3)
       expect(results.first[:name]).to eql('John')
